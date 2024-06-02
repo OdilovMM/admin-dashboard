@@ -11,7 +11,9 @@ const Sidebar = ({ showBar, setShowBar }) => {
   const handleLogout = async () => {
     dispatch(logout());
     dispatch(resetUser());
-    navigate("/");
+    setTimeout(() => {
+      navigate("/");
+    }, 500);
   };
 
   return (

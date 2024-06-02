@@ -4,7 +4,6 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { LuUsers } from "react-icons/lu";
 import { MdPayments } from "react-icons/md";
 import { CiSquareQuestion } from "react-icons/ci";
-import { IoMdChatboxes } from "react-icons/io";
 
 export const allNav = [
   {
@@ -55,12 +54,5 @@ export const allNav = [
     icon: <CiSquareQuestion />,
     role: "admin",
     path: "/admin/dashboard/sellers-request",
-  },
-  {
-    id: 8,
-    title: "Chats",
-    icon: <IoMdChatboxes />,
-    role: "admin",
-    path: "/admin/dashboard/chat-seller",
   },
 ];

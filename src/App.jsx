@@ -4,12 +4,10 @@ import {
   Sellers,
   AdminLogin,
   Category,
-  LandingPage,
   Orders,
   PaymentReq,
   DeactiveSeller,
   SellerReq,
-  ChatSeller,
   SellerDetail,
   OrdersDetail
 } from "./pages";
@@ -32,8 +30,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/" element={<AdminLogin />} />
         <Route
           path="/admin/dashboard"
           element={
@@ -51,8 +48,7 @@ function App() {
           <Route path="block-seller" element={<DeactiveSeller />} />
           <Route path="sellers-request" element={<SellerReq />} />
           <Route path="seller/detail/:sellerId" element={<SellerDetail />} />
-          <Route path="chat-seller" element={<ChatSeller />} />
-          <Route path="chat-seller/:sellerId" element={<ChatSeller />} />
+       
         </Route>
       </Routes>
     </BrowserRouter>

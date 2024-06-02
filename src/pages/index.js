@@ -7,7 +7,6 @@ import Sellers from "./Sellers";
 import PaymentReq from "./PaymentReq";
 import DeactiveSeller from "./DeactiveSeller";
 import SellerReq from "./SellerReq";
-import ChatSeller from "./ChatSeller";
 import SellerDetail from "./SellerDetail";
 import OrdersDetail from "./OrdersDetail";
 
@@ -21,7 +20,6 @@ export {
   Category,
   DeactiveSeller,
   SellerReq,
-  ChatSeller,
   SellerDetail,
   OrdersDetail
 };

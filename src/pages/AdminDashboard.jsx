@@ -7,7 +7,6 @@ import { FaTruck } from "react-icons/fa6";
 import Chart from "react-apexcharts";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
 import { getAdminDashboardInfo } from "../features/dashboardSlice/dashboardSlice";
 import { MoonLoader } from "react-spinners";
 
@@ -21,7 +20,6 @@ const AdminDashboard = () => {
     totalCustomers,
     totalProducts,
     recentOrders,
-    recentChats,
     totalDeactiveSellers,
     loader,
   } = useSelector((state) => state.dashboard);
@@ -208,54 +206,7 @@ const AdminDashboard = () => {
               </div>
             </div>
 
-            <div className="w-full lg:w-5/12 lg:pl-4  mt-6 lg:mt-0">
-              <div className="w-full  p-4 rounded-[5px] shadow-xl hover:shadow-lg cursor-pointer  bg-[#FEFEFE] text-[#120404]">
-                <div className="flex justify-between items-center pb-2">
-                  <h2 className="font-semibold text-lg text-[#0e0404]">
-                    Resent chats
-                  </h2>
-                  <Link
-                    to={`/admin/dashboard/chat-seller`}
-                    className="font-semibold text-sm text-[#120505]"
-                  >
-                    View All
-                  </Link>
-                </div>
-                <div className="flex flex-col gap-2 pt-6 text-[#fff]">
-                  <ol className="relative border-1 ml-3">
-                    {recentChats.map((recent, index) => {
-                      return (
-                        <li key={index} className="mb-2 ml-6">
-                          <div className="flex absolute -left-5 shadow-lg justify-center items-center w-10 h-10 p-[1px] z-10">
-                            <img
-                              src="https://pics.craiyon.com/2023-07-15/dc2ec5a571974417a5551420a4fb0587.webp"
-                              alt=""
-                              className="h-full w-full rounded-full"
-                            />
-                          </div>
-                          <div className="p-3 rounded-md  bg-slate-600">
-                            <div className="flex justify-between  items-center mb-2">
-                              <Link
-                                to={`/admin/dashboard/chat-seller/${recent.senderId}`}
-                                className="text-md font-normal "
-                              >
-                                {recent.senderName}
-                              </Link>
-                              <time className="mb-1 text-sm font-normal sm:order-last sm:mb-0">
-                                {moment(recent?.createdAt).format("LLL")}
-                              </time>
-                            </div>
-                            <div className="p-2 text-xs font-normal bg-slate-500 rounded-sm border-slate-50">
-                              {recent.message}
-                            </div>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ol>
-                </div>
-              </div>
-            </div>
+            
           </div>
 
           {/* table */}

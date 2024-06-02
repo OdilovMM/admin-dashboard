@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
 import { FaBars } from "react-icons/fa";
-import { CiSearch } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -19,18 +17,7 @@ const Header = ({ showBar, setShowBar }) => {
           </span>
         </div>
         <div className="hidden md:block relative ">
-          <input
-            type="text"
-            name="search"
-            placeholder="Search item..."
-            className="bg-[#e2dddd] px-3 py-1 outline-none w-[300px] border  rounded-[5px] text-[#A3A6AA] "
-            id=""
-          />
-          <CiSearch
-            className="absolute top-[7px] right-1"
-            color="#A3A6AA"
-            size={22}
-          />
+          
         </div>
 
         {/* notifications */}
