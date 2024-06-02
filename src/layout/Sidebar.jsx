@@ -8,12 +8,13 @@ const Sidebar = ({ showBar, setShowBar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
   const handleLogout = async () => {
     dispatch(logout());
     dispatch(resetUser());
-    setTimeout(() => {
+  
       navigate("/");
-    }, 500);
+   
   };
 
   return (

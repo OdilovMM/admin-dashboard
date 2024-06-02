@@ -67,8 +67,8 @@ export const authSlice = createSlice({
   },
   reducers: {
     resetUser: (state, _) => {
-      state.userToken = "";
-      state.userInfo = "";
+      state.adminToken = "";
+      state.adminInfo = "";
       state.token = "";
     },
   },
