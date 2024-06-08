@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   addCategory,
   getAllCategories,
+  deleteCategory,
 } from "../features/categorySlice/categorySlice";
 
 const Category = () => {
@@ -17,10 +18,11 @@ const Category = () => {
     (state) => state.category
   );
 
+
   const dispatch = useDispatch();
 
   // *** search components states
-  const [parPage, setParPage] = useState(5);
+  const [parPage, setParPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   // ***
@@ -47,17 +49,22 @@ const Category = () => {
     }
   };
 
-  const handleAddCategory = (e) => {
+  const handleAddCategory = async (e) => {
     e.preventDefault();
-    dispatch(addCategory(categoryData));
+    await dispatch(addCategory(categoryData));
 
-    setTimeout(() => {
-      setCategoryData({
-        name: "",
-        image: null,
-      });
-      setShowImage("");
-    }, 1000);
+    setCategoryData({
+      name: "",
+      image: null,
+    });
+    setShowImage("");
+    const obj = {
+      parPage: parseInt(parPage),
+      page: parseInt(currentPage),
+      search,
+    };
+
+    dispatch(getAllCategories(obj));
   };
 
   useEffect(() => {
@@ -66,18 +73,25 @@ const Category = () => {
       page: parseInt(currentPage),
       search,
     };
-
     dispatch(getAllCategories(obj));
   }, [search, currentPage, parPage, dispatch]);
+
+  const handleDeleteCategory = (categoryId) => {
+    dispatch(deleteCategory({ categoryId }));
+  };
 
   return (
     <>
       <div className="px-2 lg:px-7 pt-5">
+        <div className="flex justify-start gap-6 text-2xl py-2 font-semibold">
+          <div className="text-black">
+            <span>Total categories {totalCategory}</span>
+          </div>
+        </div>
         <div className="flex lg:hidden justify-between items-center mb-5 p-5 bg-[#3D464D] rounded-[5px]">
-          <h1 className="text-white">Category</h1>
           <button
             onClick={() => setShow(true)}
-            className="bg-[#94A3B8] px-3 rounded-[5px] py-1"
+            className="bg-[#bdc5d1] px-3 rounded-[5px] py-1"
           >
             Add
           </button>
@@ -86,19 +100,15 @@ const Category = () => {
         <div className="flex flex-wrap w-full">
           <div className="w-full lg:w-7/12">
             <div className="w-full p-4 bg-[#3D464D] rounded-md">
-              {totalCategory <= parPage ? (
-                " "
-              ) : (
-                <Search
-                  setParPage={setParPage}
-                  setSearch={setSearch}
-                  search={search}
-                />
-              )}
+              <Search
+                setParPage={setParPage}
+                setSearch={setSearch}
+                search={search}
+              />
 
               <div className="relative overflow-x-auto">
                 <table className="w-full text-sm text-left text-[#d0d2d6]">
-                  <thead className="text-sm text-[#d0d2d6] uppercase border-b border-slate-700">
+                  <thead className="text-sm text-[#f7f8f9] uppercase border-b border-slate-700">
                     <tr>
                       <th scope="col" className="py-3 px-4">
                         No
@@ -128,7 +138,7 @@ const Category = () => {
                             alt=""
                           />
                         </td>
-                        <td className="py-3 px-4 font-medium whitespace-nowrap">
+                        <td className="py-3 px-4 text-white text-[16px] uppercase font-medium whitespace-nowrap">
                           {d.name}
                         </td>
 
@@ -137,7 +147,7 @@ const Category = () => {
                             <Link className="px-[6px] cursor-pointer">
                               <FaPenNib />
                             </Link>
-                            <button>
+                            <button onClick={() => handleDeleteCategory(d._id)}>
                               <MdAutoDelete />
                             </button>
                           </div>

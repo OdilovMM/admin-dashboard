@@ -1,11 +1,12 @@
-import  { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-
+import { getPaymentRequestFromSeller } from "../features/paymentSlice/paymentSlice";
+import { useDispatch } from "react-redux";
 
 const MainLayout = () => {
- 
+  
   const [showBar, setShowBar] = useState(false);
 
   return (

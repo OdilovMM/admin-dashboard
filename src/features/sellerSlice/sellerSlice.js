@@ -7,7 +7,7 @@ export const getSellerRequest = createAsyncThunk(
   async ({ parPage, page, search }, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.get(
-        `/seller/get-seller-req?page=${page}&&search=${search}&&parPage=${parPage}`,
+        `/seller/seller-activate-request?page=${page}&&search=${search}&&parPage=${parPage}`,
         {
           withCredentials: true,
         }
@@ -26,6 +26,7 @@ export const getSellerDetail = createAsyncThunk(
       const { data } = await api.get(`/seller/get-seller-detail/${sellerId}`, {
         withCredentials: true,
       });
+      console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -37,7 +38,7 @@ export const updateSellerStatus = createAsyncThunk(
   "seller/updateSellerStatus",
   async (info, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const { data } = await api.post(`/seller/update-seller-status`, info, {
+      const { data } = await api.patch(`/seller/update-seller-status`, info, {
         withCredentials: true,
       });
       return fulfillWithValue(data);
@@ -55,7 +56,7 @@ export const getActiveSellers = createAsyncThunk(
   ) => {
     try {
       const { data } = await api.get(
-        `/seller/get-active-seller?page=${page}&&search=${searchValue}&&parPage=${parPage}`,
+        `/seller/get-active-sellers?page=${page}&&search=${searchValue}&&parPage=${parPage}`,
         {
           withCredentials: true,
         }
@@ -67,14 +68,14 @@ export const getActiveSellers = createAsyncThunk(
   }
 );
 export const getDeactiveSellers = createAsyncThunk(
-  "seller/getDeactiveSellers",
+  "seller/DeactiveSellers",
   async (
     { parPage, page, searchValue },
     { rejectWithValue, fulfillWithValue }
   ) => {
     try {
       const { data } = await api.get(
-        `/seller/get-deactive-seller?page=${page}&&search=${searchValue}&&parPage=${parPage}`,
+        `/seller/get-de-active-sellers?page=${page}&&search=${searchValue}&&parPage=${parPage}`,
         {
           withCredentials: true,
         }
@@ -91,6 +92,7 @@ export const sellerSlice = createSlice({
   name: "seller",
   initialState: {
     loader: false,
+    success: false,
     totalSellers: 0,
     totalDeactives: 0,
     deactiveSellers: [],
@@ -101,15 +103,15 @@ export const sellerSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getSellerRequest.fulfilled, (state, { payload }) => {
-        state.totalSellers = payload.totalSellers;
-        state.sellers = payload.sellers;
+        state.totalSellers = payload.data.totalSellers;
+        state.sellers = payload.data.sellers;
       })
       .addCase(getSellerDetail.pending, (state, { payload }) => {
         state.loader = true;
       })
       .addCase(getSellerDetail.fulfilled, (state, { payload }) => {
-        state.seller = payload.seller;
         state.loader = false;
+        state.seller = payload.data.seller;
       })
       .addCase(getSellerDetail.rejected, (state, { payload }) => {
         state.loader = false;
@@ -117,34 +119,37 @@ export const sellerSlice = createSlice({
       })
       .addCase(updateSellerStatus.pending, (state, { payload }) => {
         state.loader = true;
+        state.success = false;
       })
       .addCase(updateSellerStatus.fulfilled, (state, { payload }) => {
         state.loader = false;
+        state.success = true;
         state.seller = payload.seller;
-        toast.success(payload.message);
+        toast.success(payload.status);
       })
       .addCase(updateSellerStatus.rejected, (state, { payload }) => {
         state.loader = false;
-        toast.error(payload.message);
+        state.success = false;
+        toast.error(payload.status);
       })
       .addCase(getActiveSellers.pending, (state, { payload }) => {
         state.loader = true;
       })
       .addCase(getActiveSellers.fulfilled, (state, { payload }) => {
         state.loader = false;
-        state.sellers = payload.sellers;
-        state.totalSellers = payload.totalSellers;
+        state.sellers = payload.data.sellers;
+        state.totalSellers = payload.data.totalSellers;
       })
       .addCase(getActiveSellers.rejected, (state, { payload }) => {
-        toast.success(payload.message);
+        toast.success(payload);
       })
       .addCase(getDeactiveSellers.pending, (state, { payload }) => {
         state.loader = true;
       })
       .addCase(getDeactiveSellers.fulfilled, (state, { payload }) => {
         state.loader = false;
-        state.deactiveSellers = payload.deactiveSellers;
-        state.totalDeactives = payload.totalDeactives;
+        state.deactiveSellers = payload.data.deactiveSellers;
+        state.totalDeactives = payload.data.totalDeactives;
       })
       .addCase(getDeactiveSellers.rejected, (state, { payload }) => {
         state.loader = false;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ScaleLoader } from "react-spinners";
 import {
@@ -9,7 +9,8 @@ import {
 import { MoonLoader } from "react-spinners";
 
 const SellerDetail = () => {
-  const { seller, loader } = useSelector((state) => state.seller);
+  const navigate = useNavigate();
+  const { seller, loader, success } = useSelector((state) => state.seller);
   const { sellerId } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,12 +21,16 @@ const SellerDetail = () => {
 
   const handleStatusSubmit = (e) => {
     e.preventDefault();
+
     dispatch(
       updateSellerStatus({
         sellerId,
         status,
       })
     );
+    if (success) {
+      navigate("/admin/dashboard/sellers");
+    }
   };
 
   useEffect(() => {
@@ -33,10 +38,11 @@ const SellerDetail = () => {
       setStatus(seller.status);
     }
   }, [seller]);
+
   return (
     <div className="px-2 lg:px-7 pt-5">
       <h1 className="text-[20px] font-bold mb-3 text-[#333] ">
-        Details of {seller?.name}
+        Details of {seller?.firstName}
       </h1>
       {loader ? (
         <div className="flex justify-center items-center w-full">
@@ -61,25 +67,29 @@ const SellerDetail = () => {
                   <h2>Basic Info</h2>
                 </div>
 
-                <div className="flex justify-between text-[#fff] text-sm flex-col gap-2 p-4 bg-[#616b72] rounded-md">
-                  <div className="flex gap-2 font-bold text-[#fff]">
-                    <span>Name : </span>
-                    <span>{seller?.name} </span>
+                <div className="flex justify-between text-xl text-[#fff] flex-col gap-2 p-4 bg-[#616b72] rounded-md">
+                  <div className="flex gap-2 font-semibold text-[#fff]">
+                    <span>First Name : </span>
+                    <span>{seller?.firstName} </span>
                   </div>
-                  <div className="flex gap-2 font-bold ">
+                  <div className="flex gap-2 font-semibold text-[#fff]">
+                    <span>Last Name : </span>
+                    <span>{seller?.lastName} </span>
+                  </div>
+                  <div className="flex gap-2 font-semibold ">
                     <span>Email : </span>
                     <span>{seller?.email} </span>
                   </div>
 
-                  <div className="flex gap-2 font-bold ">
+                  <div className="flex gap-2 font-semibold ">
                     <span>Role : </span>
                     <span>{seller?.role} </span>
                   </div>
-                  <div className="flex gap-2 font-bold ">
+                  <div className="flex gap-2 font-semibold ">
                     <span>Status : </span>
                     <span>{seller?.status} </span>
                   </div>
-                  <div className="flex gap-2 font-bold ]">
+                  <div className="flex gap-2 font-semibold ]">
                     <span>Payment Status : </span>
                     <span>{seller?.payment} </span>
                   </div>
@@ -98,16 +108,16 @@ const SellerDetail = () => {
                     <span>{seller?.shopInfo?.shopName} </span>
                   </div>
                   <div className="flex gap-2 font-bold ">
-                    <span>Division : </span>
+                    <span>Region : </span>
                     <span>{seller?.shopInfo?.division} </span>
                   </div>
 
                   <div className="flex gap-2 font-bold ">
-                    <span>District : </span>
+                    <span>Address : </span>
                     <span>{seller?.shopInfo?.district} </span>
                   </div>
                   <div className="flex gap-2 font-bold ">
-                    <span>State : </span>
+                    <span>Contact Number : </span>
                     <span>{seller?.shopInfo?.subDistrict} </span>
                   </div>
                 </div>

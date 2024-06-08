@@ -3,11 +3,17 @@ import { allNav } from "../navigation/allNavigation";
 import { AiOutlineLogout } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { logout, resetUser } from "../features/authSlice/authSlice";
+import { useEffect } from "react";
+import { getPaymentRequestFromSeller } from "../features/paymentSlice/paymentSlice";
 
 const Sidebar = ({ showBar, setShowBar }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+
+
+
 
   const handleLogout = async () => {
     dispatch(logout());

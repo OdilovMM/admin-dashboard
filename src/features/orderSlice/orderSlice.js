@@ -27,7 +27,7 @@ export const getSingleOrderDetail = createAsyncThunk(
   async (orderId, { rejectWithValue, fulfillWithValue }) => {
     try {
       const { data } = await api.get(
-        `/order/get-admin-order-detail/${orderId}`,
+        `/order/get-admin-single-order-detail/${orderId}`,
         {
           withCredentials: true,
         }
@@ -73,8 +73,8 @@ export const orderSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAdminAllOrders.fulfilled, (state, { payload }) => {
-        state.totalOrders = payload.totalOrder;
-        state.myOrders = payload.orders;
+        state.totalOrders = payload.data.totalOrder;
+        state.myOrders = payload.data.orders;
         state.isLoading = false;
       })
       .addCase(getAdminAllOrders.rejected, (state, { payload }) => {
@@ -85,7 +85,7 @@ export const orderSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getSingleOrderDetail.fulfilled, (state, { payload }) => {
-        state.order = payload.order;
+        state.order = payload.data.order;
         state.isLoading = false;
       })
       .addCase(getSingleOrderDetail.rejected, (state, { payload }) => {
@@ -97,7 +97,7 @@ export const orderSlice = createSlice({
       })
       .addCase(updateOrderStatus.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        toast.success(payload.message);
+        toast.success(payload.status);
       })
       .addCase(updateOrderStatus.rejected, (state, { payload }) => {
         state.isLoading = false;

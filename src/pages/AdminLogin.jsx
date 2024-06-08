@@ -1,8 +1,8 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { ScaleLoader } from "react-spinners";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { admin_Login } from "../features/authSlice/authSlice";
 
 const AdminLogin = () => {
@@ -116,6 +116,7 @@ const AdminLogin = () => {
             </button>
           </div>
         </form>
+        <Link to='/admin/register'>Register here</Link>
       </div>
     </div>
   );

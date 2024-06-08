@@ -9,6 +9,9 @@ import DeactiveSeller from "./DeactiveSeller";
 import SellerReq from "./SellerReq";
 import SellerDetail from "./SellerDetail";
 import OrdersDetail from "./OrdersDetail";
+import AllUsers from "./AllUsers";
+import AllProducts from "./AllProducts";
+import SingleProduct from "./SingleProduct";
 
 export {
   LandingPage,
@@ -21,5 +24,8 @@ export {
   DeactiveSeller,
   SellerReq,
   SellerDetail,
-  OrdersDetail
+  OrdersDetail,
+  AllUsers,
+  AllProducts,
+  SingleProduct
 };

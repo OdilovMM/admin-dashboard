@@ -29,9 +29,12 @@ const SellerReq = () => {
 
   return (
     <div className="px-2 lg:px-7 pt-5">
-      <h1 className="mb-3 font-semibold text-[21px]">
-        Pending Seller Requests
-      </h1>
+      <div className="flex justify-start gap-6 text-2xl py-2 font-semibold">
+        <div className="text-black">
+          <span>Total Requests {totalSellers}</span>
+        </div>
+      </div>
+
       {loader ? (
         <div className="w-full flex justify-center items-center">
           <MoonLoader />
@@ -78,7 +81,7 @@ const SellerReq = () => {
               </thead>
 
               <tbody>
-                {sellers.map((d, i) => (
+                {sellers?.map((d, i) => (
                   <tr key={i}>
                     <td className="py-1 px-4 font-medium whitespace-nowrap">
                       {i + 1}

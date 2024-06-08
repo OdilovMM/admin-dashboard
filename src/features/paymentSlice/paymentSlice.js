@@ -53,7 +53,7 @@ export const paymentSlice = createSlice({
       })
       .addCase(getPaymentRequestFromSeller.fulfilled, (state, { payload }) => {
         state.loader = false;
-        state.pendingWithdraws = payload.withdrawalRequest;
+        state.pendingWithdraws = payload.data.withdrawalRequest;
       })
       .addCase(getPaymentRequestFromSeller.rejected, (state, { payload }) => {
         state.loader = false;
@@ -66,10 +66,10 @@ export const paymentSlice = createSlice({
       .addCase(confirmPaymentRequest.fulfilled, (state, { payload }) => {
         state.loader = false;
         const temp = state.pendingWithdraws.filter(
-          (request) => request._id !== payload.payment._id
+          (request) => request._id !== payload.data.payment._id
         );
         state.pendingWithdraws = temp;
-        toast.success(payload.message);
+        toast.success(payload.status);
       })
       .addCase(confirmPaymentRequest.rejected, (state, { payload }) => {
         state.loader = false;

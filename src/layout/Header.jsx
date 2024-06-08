@@ -1,9 +1,19 @@
 import { FaBars } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { CiBellOn } from "react-icons/ci";
+import { FaBell } from "react-icons/fa6";
+import { getPaymentRequestFromSeller } from "../features/paymentSlice/paymentSlice";
+import { useEffect } from "react";
 
 const Header = ({ showBar, setShowBar }) => {
   const { adminInfo } = useSelector((state) => state.auth);
+  const { pendingWithdraws } = useSelector((state) => state.payment);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getPaymentRequestFromSeller());
+  }, [dispatch]);
 
   return (
     <div className="fixed top-0 left-0 w-full py-5 px-2 lg:px-7 z-40 shadow-xl bg-[#FEFEFE]">
@@ -16,18 +26,29 @@ const Header = ({ showBar, setShowBar }) => {
             <FaBars size={26} />
           </span>
         </div>
-        <div className="hidden md:block relative ">
-          
-        </div>
+        <div className="hidden md:block relative "></div>
 
         {/* notifications */}
 
         <div className="flex justify-center items-center gap-8 relative">
-         
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center gap-6">
+            <div className="relative">
+              <div className=" w-[45px]">
+                <FaBell size={35} color="gray" />
+              </div>
+              {pendingWithdraws.length > 0 ? (
+                <span className="absolute top-[-15px] right-[-6px] bg-green-400 p-3 font-semibold text-md py-1 rounded-full flex justify-center items-center">
+                  1
+                </span>
+              ) : (
+                ""
+              )}
+            </div>
+
             <div className="flex justify-center items-center gap-4">
               <div className="flex justify-center items-center flex-col text-end">
-                <h1 className="text-md font-bold">{adminInfo?.name}</h1>
+                <h1 className="text-md font-bold">{adminInfo?.firstName}</h1>
+                <h1 className="text-md font-bold">{adminInfo?.lastName}</h1>
                 <span className="text-[14px] uppercase w-full font-normal">
                   {adminInfo?.role}
                 </span>

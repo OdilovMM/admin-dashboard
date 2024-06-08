@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Pagination, Search } from "../components";
-import { FaEye } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getActiveSellers } from "../features/sellerSlice/sellerSlice";
+import moment from "moment";
+import { getAllCustomers } from "../features/dashboardSlice/dashboardSlice";
 
-const Sellers = () => {
+const AllUsers = () => {
   const dispatch = useDispatch();
-  const { sellers, totalSellers } = useSelector((state) => state.seller);
+  const { customers, totalCustomers } = useSelector((state) => state.dashboard);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [parPage, setParPage] = useState(5);
 
   useEffect(() => {
-    const obj = {
-      parPage: parseInt(parPage),
-      page: parseInt(currentPage),
-      searchValue,
-    };
-    dispatch(getActiveSellers(obj));
-  }, [searchValue, currentPage, parPage, dispatch]);
+    dispatch(getAllCustomers());
+  }, [dispatch]);
 
   return (
     <div className="px-2 lg:px-7 pt-5 relative">
       <div className="flex justify-start gap-6 text-2xl py-2 font-semibold">
         <div className="text-black">
-          <span>Total Sellers {totalSellers}</span>
+          <span>All Customers {totalCustomers}</span>
         </div>
       </div>
 
@@ -44,7 +39,6 @@ const Sellers = () => {
             onChange={(e) => setSearchValue(e.target.value)}
             className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#cacfd5] border border-slate-700 rounded-md text-[#333]"
             type="text"
-            name="search"
             placeholder="search"
           />
         </div>
@@ -57,69 +51,57 @@ const Sellers = () => {
                   No
                 </th>
                 <th scope="col" className="py-3 px-4">
-                  Image
+                  First Name
                 </th>
                 <th scope="col" className="py-3 px-4">
-                  Name
-                </th>
-                <th scope="col" className="py-3 px-4">
-                  Shop Name
+                  Last Name
                 </th>
                 <th scope="col" className="py-3 px-4">
                   Email
                 </th>
-
                 <th scope="col" className="py-3 px-4">
-                  Payment Status
+                  Role
                 </th>
                 <th scope="col" className="py-3 px-4">
-                  Status{" "}
+                  Registered
                 </th>
                 <th scope="col" className="py-3 px-4">
-                  Action
+                  Gender
+                </th>
+                <th scope="col" className="py-3 px-4">
+                  Country
                 </th>
               </tr>
             </thead>
 
             <tbody>
-              {sellers?.map((seller, i) => (
+              {customers?.map((customer, i) => (
                 <tr key={i}>
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
                     {i + 1}
                   </td>
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
-                    <img
-                      className="w-[45px] h-[45px]"
-                      src={seller.image}
-                      alt=""
-                    />
+                    {customer.firstName}
                   </td>
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
-                    {seller.name}
+                    {customer.lastName}
                   </td>
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
-                    {seller?.shopInfo?.shopName}
+                    {customer.email}
                   </td>
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
-                    {seller.email}
+                    {customer.role}
                   </td>
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
-                    {seller.payment}
+                    {moment(customer.createdAt).format("MM/DD/YYYY")}
                   </td>
 
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
-                    {seller?.status}
+                    male
                   </td>
 
                   <td className="py-1 px-4 font-medium whitespace-nowrap">
-                    <div className="flex justify-start items-center gap-4">
-                      <Link
-                        to={`/admin/dashboard/seller/detail/${seller._id}`}
-                        className="p-[6px]  rounded  "
-                      >
-                        <FaEye />
-                      </Link>
-                    </div>
+                    Uzbekistan
                   </td>
                 </tr>
               ))}
@@ -128,11 +110,11 @@ const Sellers = () => {
         </div>
 
         <div className="w-full flex justify-end mt-4 bottom-4 right-4">
-          {totalSellers <= parPage ? (
+          {totalCustomers <= parPage ? (
             <Pagination
               pageNumber={currentPage}
               setPageNumber={setCurrentPage}
-              totalItem={totalSellers}
+              totalItem={totalCustomers}
               parPage={parPage}
               showItem={4}
             />
@@ -145,4 +127,4 @@ const Sellers = () => {
   );
 };
 
-export default Sellers;
+export default AllUsers;

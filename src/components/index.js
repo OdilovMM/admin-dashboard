@@ -1,4 +1,5 @@
 import Pagination from "./Pagination";
 import Search from "./Search";
+import AddProductBanner from "./addProductBanner";
 
-export { Pagination, Search };
+export { Pagination, Search, AddProductBanner };

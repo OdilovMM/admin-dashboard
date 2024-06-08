@@ -27,7 +27,6 @@ const PaymentReq = () => {
   const handleConfirmRequest = (id) => {
     setPaymentId(id);
     dispatch(confirmPaymentRequest(id));
-    console.log(id);
   };
 
   const Row = ({ index, style }) => {
@@ -51,12 +50,12 @@ const PaymentReq = () => {
           <button
             disabled={loader}
             onClick={() => handleConfirmRequest(pendingWithdraws[index]?._id)}
-            className="bg-[#687177] w-[100px] hover:bg-[#987179] capitalize rounded-[5px] text-[#fff] px-3 py-1 cursor-pointer"
+            className="bg-[#687177] w-[150px] flex justify-center gap-3 items-center  hover:bg-[#987179] capitalize rounded-[5px] text-[#fff] px-3 py-1 cursor-pointer"
           >
             {loader && paymentId === pendingWithdraws[index]?._id
               ? "Confirming..."
               : "Confirm"}
-            <FaCheck/>
+            <FaCheck />
           </button>
         </div>
       </div>
