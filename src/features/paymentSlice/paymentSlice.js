@@ -57,7 +57,8 @@ export const paymentSlice = createSlice({
       })
       .addCase(getPaymentRequestFromSeller.rejected, (state, { payload }) => {
         state.loader = false;
-        toast.error(payload.error);
+        console.log(payload)
+        // toast.error(payload);
       })
       // confirmPaymentRequest
       .addCase(confirmPaymentRequest.pending, (state, { payload }) => {
@@ -73,7 +74,7 @@ export const paymentSlice = createSlice({
       })
       .addCase(confirmPaymentRequest.rejected, (state, { payload }) => {
         state.loader = false;
-        toast.error(payload.error);
+        // toast.error(payload);
       });
   },
 });

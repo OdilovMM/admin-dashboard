@@ -69,11 +69,11 @@ export const bannerSlice = createSlice({
       .addCase(addBannerToHomePage.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.banner = payload.banner;
-        toast.success(payload.message);
+        toast.success(payload.status);
       })
       .addCase(addBannerToHomePage.rejected, (state, { payload }) => {
         state.isLoading = false;
-        toast.error(payload.error);
+        toast.error(payload.message);
       })
       .addCase(getBanner.pending, (state, { payload }) => {
         state.isLoading = true;
@@ -92,13 +92,13 @@ export const bannerSlice = createSlice({
       .addCase(updateBanner.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.banner = payload.banner;
-        toast.success(payload.message);
-        state.successMessage = payload.message;
+        toast.success(payload.status);
+        state.successMessage = payload.status;
       })
       .addCase(updateBanner.rejected, (state, { payload }) => {
         state.isLoading = false;
         toast.error(payload.error);
-        state.errorMessage = payload.error;
+        state.errorMessage = payload.message;
       });
   },
 });

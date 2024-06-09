@@ -37,15 +37,15 @@ function App() {
     }
   }, [adminId, dispatch]);
 
-  useEffect(() => {
-    dispatch(getPaymentRequestFromSeller());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getPaymentRequestFromSeller());
+  // }, [dispatch]);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AdminLogin />} />
-        <Route path="/admin/register" element={<AdminRegister />} />
+        {/* <Route path="/admin/register" element={<AdminRegister />} /> */}
         <Route
           path="/admin/dashboard"
           element={

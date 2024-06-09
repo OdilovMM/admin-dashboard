@@ -116,7 +116,7 @@ const AdminLogin = () => {
             </button>
           </div>
         </form>
-        <Link to='/admin/register'>Register here</Link>
+        {/* <Link to='/admin/register'>Register here</Link> */}
       </div>
     </div>
   );

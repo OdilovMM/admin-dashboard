@@ -10,6 +10,7 @@ export const admin_Login = createAsyncThunk(
       const { data } = await api.post("/admin/admin-login", info, {
         withCredentials: true,
       });
+      console.log(data)
       localStorage.setItem("adminToken", data.token);
       return fulfillWithValue(data);
     } catch (error) {
@@ -100,7 +101,7 @@ export const authSlice = createSlice({
       })
       .addCase(admin_register.rejected, (state, { payload }) => {
         state.loader = false;
-        toast.error(payload?.message);
+        toast.error(payload.message);
       })
       .addCase(admin_Login.pending, (state, { payload }) => {
         state.loader = true;
@@ -114,7 +115,7 @@ export const authSlice = createSlice({
       })
       .addCase(admin_Login.rejected, (state, { payload }) => {
         state.loader = false;
-        toast.error(payload);
+        toast.error(payload.message);
       })
 
       .addCase(getAdminDetail.fulfilled, (state, { payload }) => {
