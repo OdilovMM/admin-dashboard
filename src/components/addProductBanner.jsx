@@ -48,7 +48,6 @@ const AddProductBanner = () => {
 
   useEffect(() => {
     dispatch(getBanner(productId));
-    console.log("get");
   }, [productId, dispatch]);
 
   const update = (e) => {

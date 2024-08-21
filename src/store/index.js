@@ -1,6 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import rootSlice from "./rootSlice";
 
+const isDevelopment = window.location.hostname === "localhost";
+
 const store = configureStore({
   reducer: rootSlice,
   middleware: (getDefaultMiddleware) => {
@@ -8,7 +10,7 @@ const store = configureStore({
       serializableCheck: false,
     });
   },
-  devTools: true,
+  devTools: isDevelopment,
 });
 
 export default store;

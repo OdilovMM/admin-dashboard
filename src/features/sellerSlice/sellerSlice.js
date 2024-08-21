@@ -26,7 +26,6 @@ export const getSellerDetail = createAsyncThunk(
       const { data } = await api.get(`/seller/get-seller-detail/${sellerId}`, {
         withCredentials: true,
       });
-      console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -82,7 +81,6 @@ export const getDeactiveSellers = createAsyncThunk(
       );
       return fulfillWithValue(data);
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
